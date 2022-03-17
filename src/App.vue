@@ -1,17 +1,20 @@
 <template>
   <div id="app">
     <h1>Testador Vue ApexCharts</h1>
-    <input 
-      type="checkbox" 
-      id="checkbox" 
-      v-model="options.yaxis.reversed"
-      @change.prevent="changeReversed"
-    >
-    <label 
-      for="checkbox"
-    >
-      Revertido
-    </label>
+    <div id="options">
+    <div>
+      <input 
+        type="checkbox" 
+        id="checkbox" 
+        v-model="options.yaxis.reversed"
+        @change.prevent="changeReversed"
+      >
+      <label 
+        for="checkbox"
+      >
+        Revertido
+      </label>
+    </div>
     <select 
       v-model="selected" 
       @change="changeChart"
@@ -29,6 +32,7 @@
       v-model="options.title.text"
       @input="changeTitle"
     >
+    </div>
     <div class="chart-wrapper">
       <apex-chart 
         width="800" :type="selected" 
@@ -138,6 +142,16 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+#options {
+  display: flex;
+  text-align: justify;
+  flex-direction: row;
+  justify-content: center;
+  margin: 40px 40px;
+  gap: 20px;
+}
+
 div.chart-wrapper {
   display: flex;
   align-items: center;
