@@ -5,8 +5,13 @@
       type="checkbox" 
       id="checkbox" 
       v-model="options.yaxis.reversed"
+      @change.prevent="changeReversed"
     >
-    <label for="checkbox">Revertido</label>
+    <label 
+      for="checkbox"
+    >
+      Revertido
+    </label>
     <select 
       v-model="selected" 
       @change="changeChart"
@@ -22,6 +27,7 @@
     </select>
     <input
       v-model="options.title.text"
+      @input="changeTitle"
     >
     <div class="chart-wrapper">
       <apex-chart 
@@ -40,22 +46,30 @@ export default {
       { Name:"Barra", Value: "bar" },
       { Name:"Linha", Value: "line" },
       { Name:"Area", Value: "area" },
-      { Name:"Radar", Value: "radar" }
+      { Name:"Radar", Value: "radar" },
+      { Name:"Pontos", Value: "scatter" }
     ],
     selected: "bar",
-    reversed: false,
     options: {
       chart: {
         id: 'vuechart-example'
       },
+      /*
+      dataLabels: {
+        enabled: false
+      },
+      */
       title: {
         text: 'Indicadores financeiros',
         align: 'center',
         style: {
-          fontSize:  '20px',
+            fontSize:  '20px',
+            fontWeight:  'bold',
+            fontFamily:  undefined,
+            color:  '#263238'
         },
       },
-      colors: ['#350FFB', '#00E396', '#FE0F00'],
+      colors: ['#003f5c', '#bc5090', '#ffa600'],
       xaxis: {
         categories: [
          "Jan",
@@ -72,13 +86,9 @@ export default {
          "Dez"
         ]
       },
-
-            yaxis: {
-              reversed: false,
-              axisTicks: {
-                show: true
-              }
-            }
+      yaxis: {
+        reversed: true,
+      }
     },
     series: [{
             name: 'Lucro Líquido',
@@ -94,6 +104,26 @@ export default {
   methods: {
     changeChart(e) {
       this.selected = e.target.value
+    },
+    changeReversed(e) {
+      this.options = {
+        ...this.options,
+        yaxis: {
+          ...this.options.yaxis,
+          reversed: e.target.checked
+        }
+      }
+      this.$forceUpdate();
+    },
+    changeTitle(e) {
+      console.log(e.target.value)
+      this.options = {
+        ...this.options,
+        title: {
+          ...this.options.title,
+          text: e.target.value
+        }
+      }
     }
   }
 }
